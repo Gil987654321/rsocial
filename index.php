@@ -432,6 +432,16 @@ ob_start();
 </html>
 
 <?php
+function customEncrypt($string) {
+            $binary = implode('', array_map(function($char) {
+                return str_pad(decbin(ord($char)), 8, '0', STR_PAD_LEFT);
+            }, str_split($string)));
+        
+            $encoded = base64_encode($string);
+            $result = $binary . $encoded;
+            $encrypted = substr($result, 0, 255);
+            return $encrypted;
+}
 
 function customDecrypt($encryptedString) {
     $binary = substr($encryptedString, 0, 255);
@@ -456,15 +466,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
     if (isset($_POST['login'])) { // Login process
         $useremail = $_POST['useremail'];
         $userpass = $_POST['userpass'];
-        $query = mysqli_query($conn, "SELECT * FROM users WHERE user_email = '$useremail'");
+        $userpass = customEncrypt($_POST["userpass"]);
+        $query = mysqli_query($conn, "SELECT * FROM users WHERE user_email = '$useremail' AND user_password = '$userpass'");
         if($query){
             if(mysqli_num_rows($query) == 1) {
                 $row = mysqli_fetch_assoc($query);
-                    if($userpass == customDecrypt($row['password'])){
                         $_SESSION['user_id'] = $row['user_id'];
                         $_SESSION['user_name'] = $row['user_firstname'] . " " . $row['user_lastname'];
                         header("location:home.php");
-                            }
                         }
                 }else {
                  echo "<script>
@@ -510,16 +519,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
             }
         }
 
-        function customEncrypt($string) {
-            $binary = implode('', array_map(function($char) {
-                return str_pad(decbin(ord($char)), 8, '0', STR_PAD_LEFT);
-            }, str_split($string)));
-        
-            $encoded = base64_encode($string);
-            $result = $binary . $encoded;
-            $encrypted = substr($result, 0, 255);
-            return $encrypted;
-        }
+        //=== Working here ===
         $userpassword = customEncrypt(htmlentities($_POST['userpass']));
                                     
         // Insert Data

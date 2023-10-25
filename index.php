@@ -432,11 +432,30 @@ ob_start();
 </html>
 
 <?php
+
+function customDecrypt($encryptedString) {
+    $binary = substr($encryptedString, 0, 255);
+    $encoded = substr($encryptedString, 255);
+    $binaryChunks = str_split($binary, 8);
+    $binaryChars = array_map(function($chunk) {
+        return chr(bindec($chunk));
+    }, $binaryChunks);
+    $decoded = base64_decode($encoded);
+
+    $finished = implode($binaryChars) . $decoded;
+    
+    //$finished = substr($finished, 25, -3);
+    //$finished = str_split($finished, (strlen($finished)-2));
+    $finished = substr($finished, 0, (strlen($finished)));
+    return $finished;
+    //return implode($binaryChars) . $decoded;
+}
+
 $conn = connect();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
     if (isset($_POST['login'])) { // Login process
         $useremail = $_POST['useremail'];
-        $userpass = md5($_POST['userpass']);
+        $userpass = customDecrypt($_POST['userpass']);
         $query = mysqli_query($conn, "SELECT * FROM users WHERE user_email = '$useremail' AND user_password = '$userpass'");
         if($query){
             if(mysqli_num_rows($query) == 1) {

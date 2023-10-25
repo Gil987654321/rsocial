@@ -1,0 +1,51 @@
+CREATE TABLE `users` (
+  `user_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `user_firstname` varchar(20) NOT NULL,
+  `user_lastname` varchar(20) NOT NULL,
+  `user_nickname` varchar(20) DEFAULT NULL,
+  `user_password` varchar(255) NOT NULL,
+  `user_email` varchar(255) NOT NULL,
+  `user_gender` char(1) NOT NULL,
+  `user_birthdate` date NOT NULL,
+  `user_status` char(1) DEFAULT NULL,
+  `user_about` text DEFAULT NULL,
+  `user_hometown` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `user_phone` (
+  `user_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `user_phone` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `posts` (
+  `post_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `post_caption` text NOT NULL,
+  `post_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `post_public` char(1) NOT NULL,
+  `post_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `friendship` (
+  `user1_id` int(11) NOT NULL,
+  `user2_id` int(11) NOT NULL,
+  `friendship_status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `friendship` (
+  `user1_id` int(11) NOT NULL,
+  `user2_id` int(11) NOT NULL,
+  `friendship_status` int(11) NOT NULL,
+  PRIMARY KEY (`user1_id`, `user2_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+INSERT INTO `users` (`user_id`, `user_firstname`, `user_lastname`, `user_nickname`, `user_password`, `user_email`, `user_gender`, `user_birthdate`, `user_status`, `user_about`, `user_hometown`) VALUES
+(1, 'Julian', 'Molina', 'JulianM01', '202cb962ac59075b964b07152d234b70', 'julianmolina1313@gmail.com', 'M', '1997-07-13', 'S', 'Filántropo, Ingeniero de Software, Soporte Técnico, Ético y Coldplayer pronto emprendedor e inversionista.', 'Chiapas'),
+(2, 'Bryan Andrew', 'Castro Valencia', 'Andy', '3fc0a7acf087f549ac2b266baf94b8b1', 'bryan.castro04@unach.mx', 'M', '2004-08-24', 'S', 'ola', 'Tuxtla Gutiérrez, Chiapas, Mexico'),
+(3, 'Desarrollador', 'Software', 'dev1', '202cb962ac59075b964b07152d234b70', 'devsoftware@gmail.com', 'M', '1996-01-01', 'S', 'Desarrollador de Software.', 'Chiapas'),
+(4, 'Daniel', 'Carbajal', 'Bitbeet', '81dc9bdb52d04dc20036dbd8313ed055', 'daniel@gmail.com', 'M', '1996-07-12', 'E', 'Me gusta el software ', 'Tuxtla, Chiapas, Mexico'),
+(5, 'Usuario1', 'Apellido1', 'Usuario1', '202cb962ac59075b964b07152d234b70', 'usuario1@gmail.com', 'M', '1996-01-02', 'S', 'Hola, soy el usuario 1', 'Chiapas'),
+(6, 'Daniel 2', 'Lopez', 'BitBeet', '81dc9bdb52d04dc20036dbd8313ed055', 'edaniel@gmail.com', 'M', '1996-01-17', 'E', 'Holi', 'Tuxtla'),
+(7, 'Jorge Humberto', 'Ruiz Ovalle', 'jruizovalle', '25d55ad283aa400af464c76d713c07ad', 'jruizovalle@hotmail.com', 'M', '1996-01-01', 'M', 'Developer', 'Tuxtla / Chiapas'),
+(9, 'Cedrick', 'Marcial Quintero', 'Cendri', '8c416c2812ed806acb66520086da8972', 'cedrick.marcial25@unach.mx', 'M', '2002-12-02', 'S', 'Me gustan los videojuegos :v', ''),
+(10, 'ONICHAN', 'BAKA', '', '25d55ad283aa400af464c76d713c07ad', 'onichan@gmail.com', 'F', '1996-01-01', 'M', 'uwu', 'tlaxcala');

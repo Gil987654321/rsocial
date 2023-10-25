@@ -466,9 +466,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
                         header("location:home.php");
                             }
                         }
-                }
-            }else {
-                ?> <script>
+                }else {
+                 <script>
                     document.getElementsByClassName("required")[0].innerHTML = "Credenciales no validas";
                     document.getElementsByClassName("required")[1].innerHTML = "Credenciales no validas";
                 </script> <?php
@@ -477,6 +476,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
             echo mysqli_error($conn);
         }
     }
+
+
     if (isset($_POST['register'])) { // Register process
         // Retrieve Data
         $userfirstname = htmlentities($_POST['userfirstname']);

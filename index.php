@@ -455,14 +455,16 @@ $conn = connect();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
     if (isset($_POST['login'])) { // Login process
         $useremail = $_POST['useremail'];
-        $userpass = customDecrypt($_POST['userpass']);
-        $query = mysqli_query($conn, "SELECT * FROM users WHERE user_email = '$useremail' AND user_password = '$userpass'");
+        $userpass = $_POST['userpass'];
+        $query = mysqli_query($conn, "SELECT * FROM users WHERE user_email = '$useremail'");
         if($query){
             if(mysqli_num_rows($query) == 1) {
                 $row = mysqli_fetch_assoc($query);
-                $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['user_name'] = $row['user_firstname'] . " " . $row['user_lastname'];
-                header("location:home.php");
+                    if($userpass == customDecrypt($row['password']){
+                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['user_name'] = $row['user_firstname'] . " " . $row['user_lastname'];
+                    header("location:home.php");
+                }
             }
             else {
                 ?> <script>

@@ -467,10 +467,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
                             }
                         }
                 }else {
-                 <script>
-                    document.getElementsByClassName("required")[0].innerHTML = "Credenciales no validas";
-                    document.getElementsByClassName("required")[1].innerHTML = "Credenciales no validas";
-                </script> <?php
+                 echo "<script>
+                    document.getElementsByClassName('required')[0].innerHTML = 'Credenciales no validas';
+                    document.getElementsByClassName('required')[1].innerHTML = 'Credenciales no validas';
+                </script>";
             }
         } else{
             echo mysqli_error($conn);

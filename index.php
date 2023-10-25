@@ -460,13 +460,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
         if($query){
             if(mysqli_num_rows($query) == 1) {
                 $row = mysqli_fetch_assoc($query);
-                    if($userpass == customDecrypt($row['password']){
-                    $_SESSION['user_id'] = $row['user_id'];
-                    $_SESSION['user_name'] = $row['user_firstname'] . " " . $row['user_lastname'];
-                    header("location:home.php");
+                    if($userpass == customDecrypt($row['password'])){
+                        $_SESSION['user_id'] = $row['user_id'];
+                        $_SESSION['user_name'] = $row['user_firstname'] . " " . $row['user_lastname'];
+                        header("location:home.php");
+                            }
+                        }
                 }
-            }
-            else {
+            }else {
                 ?> <script>
                     document.getElementsByClassName("required")[0].innerHTML = "Credenciales no validas";
                     document.getElementsByClassName("required")[1].innerHTML = "Credenciales no validas";

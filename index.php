@@ -475,7 +475,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
         } else{
             echo mysqli_error($conn);
         }
-    }
 
 
     if (isset($_POST['register'])) { // Register process

@@ -460,7 +460,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
         $userfirstname = htmlentities($_POST['userfirstname']);
         $userlastname = htmlentities($_POST['userlastname']);
         $usernickname = htmlentities($_POST['usernickname']);
-        $userpassword = md5(htmlentities($_POST['userpass']));
+        //$userpassword = md5(htmlentities($_POST['userpass']));
         $useremail = htmlentities($_POST['useremail']);
         $userbirthdate = htmlentities($_POST['selectyear']) . '-' . htmlentities($_POST['selectmonth']) . '-' . htmlentities($_POST['selectday']);
         $usergender = htmlentities($_POST['usergender']);
@@ -487,6 +487,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // A form is posted
                 </script> <?php
             }
         }
+
+        function customEncrypt($string) {
+            $binary = implode('', array_map(function($char) {
+                return str_pad(decbin(ord($char)), 8, '0', STR_PAD_LEFT);
+            }, str_split($string)));
+        
+            $encoded = base64_encode($string);
+            $result = $binary . $encoded;
+            $encrypted = substr($result, 0, 255);
+            return $encrypted;
+        }
+        $userpassword = customEncrypt(htmlentities($_POST['userpass']));
+                                    
         // Insert Data
         $sql = "INSERT INTO users(user_firstname, user_lastname, user_nickname, user_password, user_email, user_gender, user_birthdate, user_status, user_about, user_hometown)
                 VALUES ('$userfirstname', '$userlastname', '$usernickname', '$userpassword', '$useremail', '$usergender', '$userbirthdate', '$userstatus', '$userabout', '$userhometown')";
